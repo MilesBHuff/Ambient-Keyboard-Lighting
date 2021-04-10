@@ -3,3 +3,12 @@ name = "get-avg-color"
 version = "0.1.0"
 authors = ["Miles B Huff <MilesBHuff@Users.NoReply.Github.com>"]
 edition = "2018"
+
+[dependencies]
+scrap = "0.5"
+
+[profile.release]
+opt-level = 3
+
+[profile.dev]
+opt-level = 1
