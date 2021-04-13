@@ -32,10 +32,6 @@ fn main() {
 
     //  //  //  //  //  //  //  //  //  //  //  //  //  //  //  //  //  //  //  //
 
-    // Update frequency
-    let fps = 4; // 250ms, around the average adult human reaction time.
-    let spf = Duration::new(1, 0) / fps;
-
     // Colors
     let color_channels = 3;
     let mut color_totals = [0u32, 0u32, 0u32]; // Theoretical maximum of 528,768,000 for 1920x1080;  so a large integer (ie, u32) is needed.  Using floats to better-support division later-on.
@@ -55,8 +51,12 @@ fn main() {
     };
     let pixels = dim.w * dim.h; // Theoretical maximum of 2,073,600 for 1920x1080;  so a large integer (ie, u32) is needed.
 
-    // Wait until there's a frame.
+    // Core loop
+    let frequency = Duration::from_millis(250); // 250ms is around the average adult human reaction time.
     loop {
+        thread::sleep(frequency);
+
+        // Wait until there's a frame.
         match capturer.frame() {
             Ok(buffer) => {
 
@@ -101,8 +101,5 @@ fn main() {
                 }
             },
         };
-
-        // Ratelimit the loop
-        thread::sleep(spf);
     }
 }
