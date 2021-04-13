@@ -3,7 +3,6 @@ use std::assert_eq;
 use std::fs;
 use std::io::ErrorKind::WouldBlock;
 use std::mem::drop;
-// use std::process::Command;
 use std::thread;
 use std::time::Duration;
 
@@ -70,15 +69,11 @@ fn main() {
     loop {
         thread::sleep(frequency);
 
-        // Wait until there's a frame.
+        // Take a screenshot
         match capturer.frame() {
             Ok(buffer) => {
 
-                // Reset re-used variables
-                color_totals   = [0, 0, 0];
-                color_averages = [0, 0, 0];
-
-                // Total the pixels
+                // Loop through the screenshot
                 let stride = buffer.len() / dim.h;
                 for y in 0..dim.h {
                     let y_stride = stride * y;
@@ -87,18 +82,19 @@ fn main() {
                         let xy_stride = x_stride + y_stride;
                         drop(x_stride);
 
+                        // Total the pixels
                         for i in 0..color_channels {
                             color_totals[(color_channels - 1) - i] += buffer[xy_stride + i] as u32;
                         }
                     }
                 }
 
-                // Average the pixels
+                // Average the totals
                 for i in 0..color_channels {
                     color_averages[i] = (color_totals[i] as f32 / pixels as f32).round() as u8;
                 }
 
-                // Convert to hex and send to sys76-kb
+                // Convert to hex and send to acpi
                 let hex: String = format!("{:02x}{:02x}{:02x}", color_averages[0], color_averages[1], color_averages[2]);
                 // Command::new("sys76-kb").arg("set").arg("-c").arg(format!("{}", hex)).spawn().expect("Error while executing `sys76-kb`.");
                 fs::write("/sys/class/leds/system76_acpi::kbd_backlight/color", format!("{}", hex)).expect("Unable to set keyboard color.");
@@ -107,7 +103,7 @@ fn main() {
                 if verbose {
                     println!("{} {}",
                         format!("#{}", hex),
-                        format!("[{}, {}, {}]", color_averages[0], color_averages[1], color_averages[2]),
+                        format!("[{:03}, {:03}, {:03}]", color_averages[0], color_averages[1], color_averages[2]),
                     );
                 }
             },
@@ -117,5 +113,9 @@ fn main() {
                 }
             },
         };
+
+        // Reset re-used variables
+        color_totals   = [0, 0, 0];
+        color_averages = [0, 0, 0];
     }
 }
