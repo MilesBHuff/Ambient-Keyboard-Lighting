@@ -66,7 +66,7 @@ fn main() {
 
     // Core loop
     let frequency = Duration::from_millis((1000.0 / fps).round() as u64);
-    drop(fps);
+    // drop(fps);
     loop {
         thread::sleep(frequency);
 
@@ -81,7 +81,7 @@ fn main() {
                     for x in 0..dim.w {
                         let x_stride = x * 4 * divisor;
                         let xy_stride = x_stride + y_stride;
-                        drop(x_stride);
+                        // drop(x_stride);
 
                         // Total the pixels
                         for i in 0..color_channels {
@@ -98,7 +98,7 @@ fn main() {
                 // Convert to hex and send to acpi
                 let hex: String = format!("{:02x}{:02x}{:02x}", color_averages[0], color_averages[1], color_averages[2]);
                 // Command::new("sys76-kb").arg("set").arg("-c").arg(format!("{}", hex)).spawn().expect("Error while executing `sys76-kb`.");
-                fs::write("/sys/class/leds/system76_acpi::kbd_backlight/color", format!("{}", hex)).expect("Unable to set keyboard color.");
+                fs::write("/sys/class/leds/system76_acpi::kbd_backlight/color", hex.to_string()).expect("Unable to set keyboard color.");
 
                 // Debug text
                 if verbose {
