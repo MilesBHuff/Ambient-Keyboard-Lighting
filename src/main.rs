@@ -47,7 +47,7 @@ fn main() {
 
     // Colors
     let color_channels = 3usize;
-    let mut color_totals   = [0u32, 0u32, 0u32]; // Theoretical maximum of 528,768,000 for 1920x1080;  so a large integer (ie, u32) is needed.  Using floats to better-support division later-on.
+    let mut color_totals   = [0u32, 0u32, 0u32]; // Theoretical maximum of 528,768,000 for 1920x1080;  so a large integer (ie, u32) is needed.
     let mut color_averages = [0u8,  0u8,  0u8];
     assert_eq!(color_totals.len(),   color_channels);
     assert_eq!(color_averages.len(), color_channels);
