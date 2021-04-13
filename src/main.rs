@@ -72,7 +72,7 @@ fn main() {
                         let xy_stride = x_stride + (stride * y);
 
                         for i in 0..color_channels {
-                            color_totals[i] += buffer[xy_stride + i] as u32;
+                            color_totals[color_channels - i - 1] += buffer[xy_stride + i] as u32;
                         }
                     }
                 }
