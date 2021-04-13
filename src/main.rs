@@ -99,7 +99,7 @@ fn main() {
                 }
 
                 // Convert to hex and send to sys76-kb
-                let hex: String = format!("{:x}{:x}{:x}", color_averages[0], color_averages[1], color_averages[2]);
+                let hex: String = format!("{:02x}{:02x}{:02x}", color_averages[0], color_averages[1], color_averages[2]);
                 // Command::new("sys76-kb").arg("set").arg("-c").arg(format!("{}", hex)).spawn().expect("Error while executing `sys76-kb`.");
                 fs::write("/sys/class/leds/system76_acpi::kbd_backlight/color", format!("{}", hex)).expect("Unable to set keyboard color.");
 
