@@ -23,6 +23,14 @@ struct ArgStruct {
     /// Prints the color being assigned to the keyboard
     #[structopt(short, long)]
     verbose: bool,
+
+    /// Runs this many times per second
+    #[structopt(short, long, default_value = "4")] // 4fps is 250ms, which is around the average adult human reaction time.
+    fps: f32,
+
+    /// Only processes every n pixels
+    #[structopt(short, long, default_value = "4")] // 4 seems reasonable.
+    divisor: usize,
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -30,10 +38,10 @@ fn main() {
 
     // Get input
     let args = ArgStruct::from_args();
-
-    // Configurables
-    let fps = 4f32; // 4fps is 250ms, which is around the average adult human reaction time.
-    let divisor = 4usize; // We will only process every X pixels.
+    let divisor = args.divisor;
+    let fps     = args.fps;
+    let verbose = args.verbose;
+    drop(args);
 
     //  //  //  //  //  //  //  //  //  //  //  //  //  //  //  //  //  //  //  //
 
@@ -96,7 +104,7 @@ fn main() {
                 fs::write("/sys/class/leds/system76_acpi::kbd_backlight/color", format!("{}", hex)).expect("Unable to set keyboard color.");
 
                 // Debug text
-                if args.verbose {
+                if verbose {
                     println!("{} {}",
                         format!("#{}", hex),
                         format!("[{}, {}, {}]", color_averages[0], color_averages[1], color_averages[2]),
