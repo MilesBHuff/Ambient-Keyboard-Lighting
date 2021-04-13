@@ -1,14 +1,36 @@
+////////////////////////////////////////////////////////////////////////////////
+use std::assert_eq;
+use std::fs;
+use std::io::ErrorKind::WouldBlock;
+// use std::process::Command;
+use std::thread;
+use std::time::Duration;
+
+//  //  //  //  //  //  //  //  //  //  //  //  //  //  //  //  //  //  //  //
 extern crate scrap;
 use scrap::{Capturer, Display};
 
-use std::assert_eq;
-// use std::fs;
-use std::io::ErrorKind::WouldBlock;
-use std::thread;
-use std::time::Duration;
-use std::process::Command;
+//  //  //  //  //  //  //  //  //  //  //  //  //  //  //  //  //  //  //  //
+extern crate structopt;
+use structopt::StructOpt;
 
+////////////////////////////////////////////////////////////////////////////////
+#[derive(StructOpt, Debug)]
+#[structopt(name = "ambient-kb")]
+struct ArgStruct {
+
+    /// Prints the color being assigned to the keyboard
+    #[structopt(short, long)]
+    verbose: bool,
+}
+
+////////////////////////////////////////////////////////////////////////////////
 fn main() {
+
+    // Get input
+    let args = ArgStruct::from_args();
+
+    //  //  //  //  //  //  //  //  //  //  //  //  //  //  //  //  //  //  //  //
 
     // Update frequency
     let fps = 4; // 250ms, around the average adult human reaction time.
@@ -62,14 +84,16 @@ fn main() {
 
                 // Convert to hex and send to sys76-kb
                 let hex: String = format!("{:x}{:x}{:x}", color_averages[0], color_averages[1], color_averages[2]);
-                Command::new("sys76-kb").arg("set").arg("-c").arg(format!("{}", hex)).spawn().expect("Error while executing `sys76-kb`.");
-                // fs::write("/sys/class/leds/system76_acpi::kbd_backlight/color", format!("{}", hex)).expect("Unable to set keyboard color.");
+                // Command::new("sys76-kb").arg("set").arg("-c").arg(format!("{}", hex)).spawn().expect("Error while executing `sys76-kb`.");
+                fs::write("/sys/class/leds/system76_acpi::kbd_backlight/color", format!("{}", hex)).expect("Unable to set keyboard color.");
 
-                // // Debug text
-                // println!("{} {}",
-                //     format!("[{}, {}, {}]", color_averages[0], color_averages[1], color_averages[2]),
-                //     format!("#{}", hex),
-                // );
+                // Debug text
+                if args.verbose {
+                    println!("{} {}",
+                        format!("#{}", hex),
+                        format!("[{}, {}, {}]", color_averages[0], color_averages[1], color_averages[2]),
+                    );
+                }
             },
             Err(error) => {
                 if error.kind() != WouldBlock {

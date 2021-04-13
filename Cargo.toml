@@ -1,11 +1,12 @@
 [package]
-name = "get-avg-color"
-version = "0.1.0"
+name = "ambient-kb"
+version = "0.2.0"
 authors = ["Miles B Huff <MilesBHuff@Users.NoReply.Github.com>"]
 edition = "2018"
 
 [dependencies]
 scrap = "0.5"
+structopt = "0.3.21"
 
 [profile.release]
 opt-level = 3
