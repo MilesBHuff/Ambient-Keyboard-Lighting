@@ -1,15 +1,37 @@
 [package]
 name = "ambient-kb"
 version = "0.2.0"
+license = "AGPL3"
 authors = ["Miles B Huff <MilesBHuff@Users.NoReply.Github.com>"]
+description = "Calculates the average color of the display, and sets the keyboard to that color."
 edition = "2018"
 
 [dependencies]
 scrap = "0.5"
 structopt = "0.3.21"
 
-[profile.release]
-opt-level = 3
-
 [profile.dev]
+debug = true
+debug-assertions = true
+incremental = true
+lto = "fat"
 opt-level = 1
+overflow-checks = true
+panic = "unwind"
+
+[profile.dev.build-override]
+opt-level = 1
+
+[profile.release]
+codegen-units = 1
+debug = false
+debug-assertions = false
+incremental = true
+lto = "thin"
+opt-level = 3
+overflow-checks = true
+panic = "abort"
+
+[profile.release.build-override]
+opt-level = 3
+codegen-units = 1
