@@ -2,6 +2,7 @@
 use std::assert_eq;
 use std::fs;
 use std::io::ErrorKind::WouldBlock;
+use std::mem::drop;
 // use std::process::Command;
 use std::thread;
 use std::time::Duration;
@@ -30,17 +31,20 @@ fn main() {
     // Get input
     let args = ArgStruct::from_args();
 
+    // Configurables
+    let fps = 4f32; // 4fps is 250ms, which is around the average adult human reaction time.
+    let divisor = 4usize; // We will only process every X pixels.
+
     //  //  //  //  //  //  //  //  //  //  //  //  //  //  //  //  //  //  //  //
 
     // Colors
-    let color_channels = 3;
-    let mut color_totals = [0u32, 0u32, 0u32]; // Theoretical maximum of 528,768,000 for 1920x1080;  so a large integer (ie, u32) is needed.  Using floats to better-support division later-on.
-    let mut color_averages = [0u8, 0u8, 0u8];
-    assert_eq!(color_channels, color_totals.len());
-    assert_eq!(color_channels, color_averages.len());
+    let color_channels = 3usize;
+    let mut color_totals   = [0u32, 0u32, 0u32]; // Theoretical maximum of 528,768,000 for 1920x1080;  so a large integer (ie, u32) is needed.  Using floats to better-support division later-on.
+    let mut color_averages = [0u8,  0u8,  0u8];
+    assert_eq!(color_totals.len(),   color_channels);
+    assert_eq!(color_averages.len(), color_channels);
 
     // Display
-    let divisor: usize = 2; // We will only process every X pixels.
     let display = Display::primary().expect("Failed to load primary display.");
     let mut capturer = Capturer::new(display).expect("Failed to capture screenshot.");
     struct Dim {
@@ -53,8 +57,8 @@ fn main() {
     let pixels = dim.w * dim.h; // Theoretical maximum of 2,073,600 for 1920x1080;  so a large integer (ie, u32) is needed.
 
     // Core loop
-    let fps: u8 = 4; // 250ms is around the average adult human reaction time.
-    let frequency = Duration::from_millis((1000f32 / fps as f32).round() as u64);
+    let frequency = Duration::from_millis((1000.0 / fps).round() as u64);
+    drop(fps);
     loop {
         thread::sleep(frequency);
 
@@ -68,13 +72,15 @@ fn main() {
 
                 // Total the pixels
                 let stride = buffer.len() / dim.h;
-                for x in 0..dim.w {
-                    let x_stride = 4 * x * divisor;
-                    for y in 0..dim.h {
-                        let xy_stride = x_stride + (stride * y);
+                for y in 0..dim.h {
+                    let y_stride = stride * y;
+                    for x in 0..dim.w {
+                        let x_stride = x * 4 * divisor;
+                        let xy_stride = x_stride + y_stride;
+                        drop(x_stride);
 
                         for i in 0..color_channels {
-                            color_totals[color_channels - i - 1] += buffer[xy_stride + i] as u32;
+                            color_totals[(color_channels - 1) - i] += buffer[xy_stride + i] as u32;
                         }
                     }
                 }
