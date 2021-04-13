@@ -1,0 +1,16 @@
+#NOTE: Run `git add : --renormalize` after editing this file.
+
+## Defaults
+## -----------------------------------------------------------------------------
+* text=auto eol=lf
+
+## Code
+*.rs text
+
+## Documentation
+*.md  text
+*.rst text
+*.txt text
+
+## Binaries
+cargo.lock binary

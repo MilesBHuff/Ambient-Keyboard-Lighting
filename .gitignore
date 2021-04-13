@@ -1,1 +1,23 @@
-/target
+## Version control
+.git/
+Cargo.lock
+
+## Dynamic/Unversionable
+target/
+*.bak
+*.old
+*.swp
+*.tmp
+
+## IDEs
+.vscode/
+
+## System files
+.directory
+.DS_Store
+desktop.ini
+thumbs.db
+.fuse_hidden*
+
+# Keep .keep files
+!.keep

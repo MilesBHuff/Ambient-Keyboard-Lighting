@@ -1,0 +1,30 @@
+root=true
+
+## Defaults
+## -----------------------------------------------------------------------------
+[*]
+
+## Tabulation
+indent_style = tab
+indent_size  = 4
+
+## Lines
+end_of_line = lf
+insert_final_newline = true
+max_line_length = off
+
+## Other
+charset = utf-8
+
+## Extension-specific settings
+## -----------------------------------------------------------------------------
+
+## Files that require 2-space indents
+[{*.md,*.rst}]
+indent_style = space
+indent_size = 2
+
+## Needed for code to work properly with the in-game editor.
+[*.rs]
+indent_size  = 4
+indent_style = space
