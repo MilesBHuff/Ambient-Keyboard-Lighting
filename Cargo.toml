@@ -1,7 +1,7 @@
 [package]
 name = "ambient-kb"
 version = "1.0.0"
-license = "AGPL3"
+license = "AGPL-3.0-or-later"
 authors = ["Miles B Huff <MilesBHuff@Users.NoReply.Github.com>"]
 description = "Calculates the average color of the display, and sets the keyboard to that color."
 edition = "2018"
