@@ -34,6 +34,7 @@ struct ArgStruct {
 
 ////////////////////////////////////////////////////////////////////////////////
 fn main() {
+    //TODO: Set niceness to 20.
 
     // Get input
     let args = ArgStruct::from_args();
@@ -117,5 +118,9 @@ fn main() {
         // Reset re-used variables
         color_totals   = [0, 0, 0];
         color_averages = [0, 0, 0];
+
+        //  //  //  //  //  //  //  //  //  //  //  //  //  //  //  //  //  //  //  //
+
+        //TODO: Set keyboard backlight brightness to display backlight brightness
     }
 }
