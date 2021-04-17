@@ -2,7 +2,7 @@
 
 # Maintainer: Miles B Huff <MilesBHuff@Users.NoReply.Github.com>
 pkgrel=1
-pkgver=34ab57d346cafa5e52c43cf431412aef0c28ff57
+pkgver=CommitHash
 pkgname=ambient-kb-git
 pkgdesc="Sets keyboard color to match display on certain System76 laptops"
 license=('LAGPL3')
@@ -20,19 +20,26 @@ makedepends=(
     'git' # Automatic dependencies (Run `namcap PKGBUILD` to get a list.)
     'cargo' 'rust' # Manual dependencies
 )
+optdepends=(
+    'apparmor' # Needed for the included apparmor profile to work.
+)
 arch=('x86_64')
 
 build() {
-	cd "$srcdir/Ambient-Keyboard-Lighting"
+	cd "$srcdir/Ambient-Keyboard-Lighting/application"
 	cargo build --release
 }
 
 package() {
-    _from_dir="$srcdir/Ambient-Keyboard-Lighting/target/release/ambient-kb"
-    _to_dir="$pkgdir/usr/bin/"
+    ls "$srcdir/Ambient-Keyboard-Lighting"
 
-    mkdir -p "$_to_dir"
-    sudo cp "$_from_dir" "$_to_dir"
+    _from="$srcdir/Ambient-Keyboard-Lighting/application/target/release/ambient-kb"
+    _to="$pkgdir/usr/bin/"
+    mkdir -p "$_to" && cp "$_from" "$_to"
+
+    _from="$srcdir/Ambient-Keyboard-Lighting/packaging/apparmor/usr.bin.ambient-kb"
+    _to="$pkgdir/etc/apparmor.d/"
+    mkdir -p "$_to" && cp "$_from" "$_to"
 
     # Run `namcap *.zst` to view possible issues with the generated package.
 }
