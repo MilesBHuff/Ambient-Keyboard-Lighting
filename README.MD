@@ -32,4 +32,4 @@ OPTIONS:
 
 ## Copyright
 
-Copyright (C) from 2021 by Miles B Huff, per the terms of the Affero General Public License (v3.0 or later).
+Copyright (C) from 2021 by Miles B Huff, per the terms of the Lesser Affero General Public License (v3.0 or later).

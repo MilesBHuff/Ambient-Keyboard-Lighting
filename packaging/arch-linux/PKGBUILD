@@ -1,0 +1,36 @@
+# Maintainer: Miles B Huff <MilesBHuff@Users.NoReply.Github.com>
+pkgrel=1
+pkgver=34ab57d346cafa5e52c43cf431412aef0c28ff57
+pkgname=ambient-kb-git
+pkgdesc="Sets keyboard color to match display on certain System76 laptops"
+license=('LAGPL3')
+
+url="https://github.com/MilesBHuff/Ambient-Keyboard-Lighting"
+source=('git+https://github.com/MilesBHuff/Ambient-Keyboard-Lighting.git')
+md5sums=('SKIP')
+# Update the md5sums with `updpkgsums`
+
+depends=(
+    'gcc-libs' 'glibc' 'libxau' 'libxcb' 'libxdmcp' # Linked dependencies (Run `calc-depends.sh` to get a list.)
+    'system76-acpi-dkms' # Runtime dependencies
+)
+makedepends=(
+    'git' # Automatic dependencies (Run `namcap PKGBUILD` to get a list.)
+    'cargo' 'rust' # Manual dependencies
+)
+arch=('x86_64')
+
+build() {
+	cd "$srcdir/Ambient-Keyboard-Lighting"
+	cargo build --release
+}
+
+package() {
+    _from_dir="$srcdir/Ambient-Keyboard-Lighting/target/release/ambient-kb"
+    _to_dir="$pkgdir/usr/bin/"
+
+    mkdir -p "$_to_dir"
+    sudo cp "$_from_dir" "$_to_dir"
+
+    # Run `namcap *.zst` to view possible issues with the generated package.
+}
