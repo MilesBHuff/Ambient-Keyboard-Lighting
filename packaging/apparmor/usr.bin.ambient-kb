@@ -2,5 +2,5 @@
 # Copyright © from 2021 by Miles B Huff per the terms of the GNU LAGPL 3.
 
 "/usr/bin/ambient-kb" {
-  /sys/class/leds/system76_acpi::kbd_backlight/color w
+  /sys/class/leds/system76_acpi::kbd_backlight/color w,
 }
