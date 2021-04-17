@@ -1,3 +1,5 @@
+// Copyright © from 2021 by Miles B Huff <MilesBHuff@Users.NoReply.Github.com> per the terms of the GNU LAGPL 3.
+
 ////////////////////////////////////////////////////////////////////////////////
 use std::assert_eq;
 use std::fs;
