@@ -1,3 +1,5 @@
+#!/usr/bin/sh
+
 # Maintainer: Miles B Huff <MilesBHuff@Users.NoReply.Github.com>
 pkgrel=1
 pkgver=34ab57d346cafa5e52c43cf431412aef0c28ff57
