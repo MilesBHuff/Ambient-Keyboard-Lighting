@@ -1,0 +1,9 @@
+#NOTE: Run `git add : --renormalize` after editing this file.
+
+## Defaults
+## -----------------------------------------------------------------------------
+* text=auto eol=lf
+
+## Documentation
+*.md  text
+*.txt text

@@ -1,0 +1,31 @@
+# Maintainer: Miles B Huff <MilesBHuff@Users.NoReply.Github.com>
+pkgname=ambient-kb-git
+pkgver=34ab57d346cafa5e52c43cf431412aef0c28ff57
+pkgdesc="Sets keyboard color to match display on certain System76 computers"
+license=('AGPL-3.0-or-later')
+
+depends=(
+    'gcc-libs' 'glibc' 'libxau' 'libxcb' 'libxdmcp' # Linked dependencies (the output of `calc-depends.sh`)
+    'system76-acpi-dkms' # Runtime dependencies
+)
+makedepends=('cargo' 'rust')
+
+url="https://github.com/MilesBHuff/Ambient-Keyboard-Lighting"
+source=('https://github.com/MilesBHuff/Ambient-Keyboard-Lighting/archive/refs/heads/master.zip')
+md5sums=('2ce4981b7199586b993588beb9dfeb36') # Generate with `makepkg -g`
+
+arch=('any')
+pkgrel=1
+
+build() {
+	cd "$srcdir/Ambient-Keyboard-Lighting-master"
+	cargo build --release
+}
+
+package() {
+    from_dir="$srcdir/Ambient-Keyboard-Lighting-master/target/release/ambient-kb"
+    to_dir="$pkgdir/usr/bin/"
+
+    mkdir -p "$to_dir"
+    sudo cp "$from_dir" "$to_dir"
+}
