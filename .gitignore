@@ -1,2 +1,3 @@
-# Ignore everything that is not explicitly added.
-*
+# Ignore everything that is not either (1) explicitly `add -f`ed, or (2) in the root directory.
+**
+!/*
