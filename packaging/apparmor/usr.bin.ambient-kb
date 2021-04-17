@@ -1,9 +1,11 @@
 # AppArmor policy for `ambient-kb`
 # Copyright © from 2021 by Miles B Huff per the terms of the GNU LAGPL 3.
-"/usr/bin/ambient-kb" {
+
+/usr/bin/ambient-kb flags=(complain) { #FIXME: 'enforce' doesn't work
 
   # Dependencies
   /usr/lib/lib* rm,
+  /usr/lib/libgcc* rmix,
 
   # Keyboard controllers
   /sys/class/leds/system76_acpi::kbd_backlight/color w,
