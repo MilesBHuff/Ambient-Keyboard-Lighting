@@ -1,19 +1,9 @@
 # AppArmor policy for `ambient-kb`
 # Copyright © from 2021 by Miles B Huff per the terms of the GNU LAGPL 3.
-
 "/usr/bin/ambient-kb" {
 
   # Dependencies
-  /usr/lib/libxcb.* rm,
-  /usr/lib/libxcb-shm.* rm,
-  /usr/lib/libxcb-randr.* rm,
-  /usr/lib/libgcc_s.* rm,
-  /usr/lib/libpthread-* rm,
-  /usr/lib/libm-* rm,
-  /usr/lib/libdl-* rm,
-  /usr/lib/libc-* rm,
-  /usr/lib/libXau.* rm,
-  /usr/lib/libXdmcp.* rm,
+  /usr/lib/lib* rm,
 
   # Keyboard controllers
   /sys/class/leds/system76_acpi::kbd_backlight/color w,
