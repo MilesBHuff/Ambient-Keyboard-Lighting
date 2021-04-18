@@ -1,11 +1,19 @@
 # AppArmor policy for `ambient-kb`
 # Copyright © from 2021 by Miles B Huff per the terms of the GNU LAGPL 3.
 
-/usr/bin/ambient-kb flags=(complain) { #FIXME: 'enforce' doesn't work
+/usr/bin/ambient-kb {
+
+  # Needed for useful stack traces
+  /usr/bin/ambient-kb r,
 
   # Dependencies
   /usr/lib/lib* rm,
-  /usr/lib/libgcc* rmix,
+  /usr/lib/libgcc* rmix, #NOTE: Runs without `ix`, but AppArmor will throw a warning.
+
+  # Needed to access X display
+  capability dac_read_search,
+  /home/*/.Xauthority r,
+  /sys/devices/** rw, #WARN: Not a great setting;  but there's no way around this...
 
   # Keyboard controllers
   /sys/class/leds/system76_acpi::kbd_backlight/color w,
