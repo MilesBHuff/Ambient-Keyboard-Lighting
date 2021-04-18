@@ -38,11 +38,11 @@ package() {
     _to="$pkgdir/usr/bin/"
     mkdir -p "$_to" && cp "$_from" "$_to"
 
-    _from="$srcdir/Ambient-Keyboard-Lighting/packaging/apparmor/usr.bin.ambient-kb"
+    _from="$srcdir/Ambient-Keyboard-Lighting/configuration/apparmor/usr.bin.ambient-kb"
     _to="$pkgdir/etc/apparmor.d/"
     mkdir -p "$_to" && cp "$_from" "$_to"
 
-    _from="$srcdir/Ambient-Keyboard-Lighting/packaging/systemd/usr.bin.ambient-kb"
+    _from="$srcdir/Ambient-Keyboard-Lighting/configuration/systemd/usr.bin.ambient-kb"
     _to="$pkgdir/etc/apparmor.d/"
     mkdir -p "$_to" && cp "$_from" "$_to"
 
