@@ -42,8 +42,8 @@ package() {
     _to="$pkgdir/etc/apparmor.d/"
     mkdir -p "$_to" && cp "$_from" "$_to"
 
-    _from="$srcdir/Ambient-Keyboard-Lighting/configuration/systemd/usr.bin.ambient-kb"
-    _to="$pkgdir/etc/apparmor.d/"
+    _from="$srcdir/Ambient-Keyboard-Lighting/configuration/systemd/ambient-kb.service"
+    _to="$pkgdir/etc/systemd/system/"
     mkdir -p "$_to" && cp "$_from" "$_to"
 
     # Run `namcap *.zst` to view possible issues with the generated package.
