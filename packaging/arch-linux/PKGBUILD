@@ -22,6 +22,7 @@ makedepends=(
 )
 optdepends=(
     'apparmor' # Needed for the included apparmor profile to work.
+    'systemd' # Needed for the included systemd service to work.
 )
 arch=('x86_64')
 
@@ -38,6 +39,10 @@ package() {
     mkdir -p "$_to" && cp "$_from" "$_to"
 
     _from="$srcdir/Ambient-Keyboard-Lighting/packaging/apparmor/usr.bin.ambient-kb"
+    _to="$pkgdir/etc/apparmor.d/"
+    mkdir -p "$_to" && cp "$_from" "$_to"
+
+    _from="$srcdir/Ambient-Keyboard-Lighting/packaging/systemd/usr.bin.ambient-kb"
     _to="$pkgdir/etc/apparmor.d/"
     mkdir -p "$_to" && cp "$_from" "$_to"
 

@@ -1,0 +1,29 @@
+[Unit]
+Description=ambient keyboard lighting
+
+# X/Wayland/etc needs to be started before this will work.
+Requires=display-manager.service
+
+[Service]
+Type=simple
+
+#TODO: Get the below dynamically.
+Environment="DISPLAY=:0"
+Environment="XAUTHORITY=/home/*/.Xauthority"
+
+ExecStart=/usr/bin/ambient-kb
+ExecStop=/usr/bin/pkill ambient-kb
+
+Restart=on-failure
+RestartSec=1s
+
+# The app doesn't need a working directory, but systemd wants one.
+WorkingDirectory=/tmp
+
+# Has to be root to write to keyboard settings in /sys
+User=root
+Group=root
+
+[Install]
+# This program requires graphics to work.
+WantedBy=graphical.target
