@@ -17,7 +17,7 @@ code in this project.
 6. Individual characteristics -- including, but not limited to, body, sex,
 sexual preference, race, language, religion, nationality, or political
 preferences -- are irrelevant in the scope of the project and will not be taken
-into account concerning a contributor's value or their of your contribution(s)
+into account concerning a contributor's value of their or your contribution(s)
 to the project.
 
 7. The project creator(s)/lead developer(s)/core team constitute the managing
