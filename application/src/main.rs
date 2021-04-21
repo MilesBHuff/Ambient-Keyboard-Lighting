@@ -26,11 +26,11 @@ struct ArgStruct {
     verbose: bool,
 
     /// Runs this many times per second
-    #[structopt(short, long, default_value = "4")] // 4fps is 250ms, which is around the average adult human reaction time.
+    #[structopt(short, long, default_value = "4")] // 20 is smooth.  Any lower risks creating a strobing effect.  Everyone's eyes are different;  YMMV.
     fps: f32,
 
     /// Only processes every n pixels
-    #[structopt(short, long, default_value = "4")] // 4 seems reasonable.
+    #[structopt(short, long, default_value = "4")] // 30 works well at 1080p.  Causes flickering when not a multiple of both display axes.  Causes flickering when set too high.
     divisor: usize,
 }
 
