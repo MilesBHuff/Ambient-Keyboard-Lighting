@@ -37,7 +37,7 @@ struct ArgStruct {
     #[structopt(short, long, default_value = "4")] // 20 is smooth.  Any lower risks creating a strobing effect.  Everyone's eyes are different;  YMMV.
     fps: f32,
 
-    /// The niceness level to run at
+    /// The priority to run at
     #[structopt(short, long, default_value = "19")] // 19 is the highest niceness possible
     niceness: usize,
 }

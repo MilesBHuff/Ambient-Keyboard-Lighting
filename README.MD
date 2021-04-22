@@ -15,7 +15,7 @@ Treat it like any normal cargo app.  Note, however, that you have to run this as
 ### Helptext
 
 ```
-ambient-kb 1.0.0
+ambient-kb X.Y.Z
 
 USAGE:
     ambient-kb [FLAGS] [OPTIONS]
@@ -28,6 +28,7 @@ FLAGS:
 OPTIONS:
     -d, --divisor <divisor>    Only processes every n pixels [default: 4]
     -f, --fps <fps>            Runs this many times per second [default: 4]
+    -n, --niceness <niceness>  The priority to run at [default: 19]
 ```
 
 ## Copyright
