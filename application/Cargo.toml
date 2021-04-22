@@ -9,7 +9,7 @@ edition = "2018"
 [dependencies]
 libc = "0.2"
 scrap = "0.5"
-structopt = "0.3.21"
+structopt = "0.3"
 
 [profile.dev]
 debug = true
