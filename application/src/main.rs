@@ -9,6 +9,10 @@ use std::thread;
 use std::time::Duration;
 
 //  //  //  //  //  //  //  //  //  //  //  //  //  //  //  //  //  //  //  //
+extern crate libc;
+use libc::{setpriority, PRIO_PROCESS, getpid};
+
+//  //  //  //  //  //  //  //  //  //  //  //  //  //  //  //  //  //  //  //
 extern crate scrap;
 use scrap::{Capturer, Display};
 
@@ -32,6 +36,10 @@ struct ArgStruct {
     /// Only processes every n pixels
     #[structopt(short, long, default_value = "4")] // 30 works well at 1080p.  Causes flickering when not a multiple of both display axes.  Causes flickering when set too high.
     divisor: usize,
+
+    /// The niceness level to run at
+    #[structopt(short, long, default_value = "19")] // 19 is the highest niceness possible
+    niceness: usize,
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -41,6 +49,7 @@ fn main() {
     // Get input
     let args = ArgStruct::from_args();
     let divisor = args.divisor;
+    let niceness = args.niceness;
     let fps     = args.fps;
     let verbose = args.verbose;
     drop(args);
@@ -65,6 +74,11 @@ fn main() {
         h: capturer.height() / divisor,
     };
     let pixels = dim.w * dim.h; // Theoretical maximum of 2,073,600 for 1920x1080;  so a large integer (ie, u32) is needed.
+
+    // Reduce priority
+    unsafe {
+        setpriority(PRIO_PROCESS, getpid() as u32, niceness as i32);
+    }
 
     // Core loop
     let frequency = Duration::from_millis((1000.0 / fps).round() as u64);
