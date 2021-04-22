@@ -1,7 +1,6 @@
 // Copyright © from 2021 by Miles B Huff <MilesBHuff@Users.NoReply.Github.com> per the terms of the GNU LAGPL 3.
 
 ////////////////////////////////////////////////////////////////////////////////
-use std::assert_eq;
 use std::fs;
 use std::io::ErrorKind::WouldBlock;
 use std::mem::drop;
@@ -44,7 +43,6 @@ struct ArgStruct {
 
 ////////////////////////////////////////////////////////////////////////////////
 fn main() {
-    //TODO: Set niceness to 20.
 
     // Get input
     let args = ArgStruct::from_args();
@@ -60,8 +58,8 @@ fn main() {
     let color_channels = 3usize;
     let mut color_totals   = [0u32, 0u32, 0u32]; // Theoretical maximum of 528,768,000 for 1920x1080;  so a large integer (ie, u32) is needed.
     let mut color_averages = [0u8,  0u8,  0u8];
-    assert_eq!(color_totals.len(),   color_channels);
-    assert_eq!(color_averages.len(), color_channels);
+    debug_assert_eq!(color_totals.len(),   color_channels);
+    debug_assert_eq!(color_averages.len(), color_channels);
 
     // Display
     let display = Display::primary().expect("Failed to load primary display.");
@@ -76,9 +74,7 @@ fn main() {
     let pixels = dim.w * dim.h; // Theoretical maximum of 2,073,600 for 1920x1080;  so a large integer (ie, u32) is needed.
 
     // Reduce priority
-    unsafe {
-        setpriority(PRIO_PROCESS, getpid() as u32, niceness as i32);
-    }
+    unsafe {setpriority(PRIO_PROCESS, getpid() as u32, niceness as i32);}
 
     // Core loop
     let frequency = Duration::from_millis((1000.0 / fps).round() as u64);
