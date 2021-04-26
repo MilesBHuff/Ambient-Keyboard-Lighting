@@ -32,7 +32,7 @@ struct ArgStruct {
     divisor: usize,
 
     /// Runs this many times per second
-    #[structopt(short, long, default_value = "18")] // 20 is smooth.  Any lower risks creating a strobing effect.  Everyone's eyes are different;  YMMV.
+    #[structopt(short, long, default_value = "20")] // 20 is smooth.  Any lower risks creating a strobing effect.  Everyone's eyes are different;  YMMV.
     fps: f32,
 
     /// The priority to run at

@@ -26,9 +26,9 @@ FLAGS:
     -v, --verbose    Prints the color being assigned to the keyboard
 
 OPTIONS:
-    -d, --divisor <divisor>    Only processes every n pixels [default: 4]
-    -f, --fps <fps>            Runs this many times per second [default: 4]
-    -n, --niceness <niceness>  The priority to run at [default: 19]
+    -d, --divisor <divisor>      Only processes every n pixels [default: 30]
+    -f, --fps <fps>              Runs this many times per second [default: 20]
+    -n, --niceness <niceness>    The priority to run at [default: 19]
 ```
 
 ## Copyright
