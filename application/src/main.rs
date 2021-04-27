@@ -40,7 +40,7 @@ struct ArgStruct {
     fps: f32,
 
     /// The priority to run at
-    #[structopt(short, long, default_value = "19")] // 19 is the highest niceness possible
+    #[structopt(short, long, default_value = "19")] // 19 is the highest niceness possible.
     niceness: i32,
 }
 
@@ -133,7 +133,7 @@ fn main() {
                     color_averages[i as usize] = rounded_integer_division(color_totals[i as usize] as usize, pixels as usize) as u8;
                 }
 
-                // Convert to hex and send to acpi
+                // Convert to hex and send to ACPI
                 let hex: String = format!("{:02x}{:02x}{:02x}", color_averages[0], color_averages[1], color_averages[2]);
                 fs::write("/sys/class/leds/system76_acpi::kbd_backlight/color", hex.to_string()).expect("Unable to set keyboard color.");
 
