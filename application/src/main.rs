@@ -29,7 +29,7 @@ struct ArgStruct {
 
     /// Only processes every n pixels
     #[structopt(short, long, default_value = "30")] // 30 works well at 1080p.  Causes flickering when not a multiple of both display axes.  Causes flickering when set too high.
-    divisor: usize,
+    divisor: u8,
 
     /// Runs this many times per second
     #[structopt(short, long, default_value = "20")] // 20 is smooth.  Any lower risks creating a strobing effect.  Everyone's eyes are different;  YMMV.
@@ -47,14 +47,14 @@ fn main() {
     //  //  //  //  //  //  //  //  //  //  //  //  //  //  //  //  //  //  //  //
     // Colors
 
-    let color_channels: usize = 3;                        // Could be a u8 if it weren't used for array indexing.
-    let color_channels_index: usize = color_channels - 1; // Could be a u8 if it weren't used for array indexing.
+    let color_channels: u8 = 3;
+    let color_channels_index: usize = (color_channels as usize) - 1; // Could be a u8 if it weren't used for array indexing.
 
     let mut color_totals   = [0u32, 0u32, 0u32]; // Theoretical maximum of 528,768,000 for 1920x1080;  so a large integer (ie, u32) is needed.
     let mut color_averages = [0u8,  0u8,  0u8 ]; // Theoretical maximum of 256 each;  so we only need 8 bits.
 
-    debug_assert_eq!(color_totals.len(),   color_channels);
-    debug_assert_eq!(color_averages.len(), color_channels);
+    debug_assert_eq!(color_totals.len()   as u8, color_channels);
+    debug_assert_eq!(color_averages.len() as u8, color_channels);
 
     //  //  //  //  //  //  //  //  //  //  //  //  //  //  //  //  //  //  //  //
     // Display
@@ -63,14 +63,14 @@ fn main() {
     let mut capturer = Capturer::new(display).expect("Failed to capture screenshot.");
 
     struct Dim {
-        w: usize,
-        h: usize,
+        w: u16,
+        h: u16,
     }
     let dim = Dim {
-        w: (capturer.width()  as f32 / args.divisor as f32).round() as usize,
-        h: (capturer.height() as f32 / args.divisor as f32).round() as usize,
+        w: (capturer.width()  as f32 / args.divisor as f32).round() as u16,
+        h: (capturer.height() as f32 / args.divisor as f32).round() as u16,
     };
-    let pixels = dim.w * dim.h; // Theoretical maximum of 2,073,600 for 1920x1080;  so a large integer (ie, u32) is needed.
+    let pixels: u32 = (dim.w as u32) * (dim.h as u32); // Theoretical maximum of 2,073,600 for 1920x1080;  so a large integer (ie, u32) is needed.
 
     //  //  //  //  //  //  //  //  //  //  //  //  //  //  //  //  //  //  //  //
     // Strides
@@ -84,7 +84,7 @@ fn main() {
     }
     let mut stride = Stride {
         h: 0,
-        w: 4 * args.divisor,
+        w: 4 * (args.divisor as usize),
         x: 0,
         y: 0,
         s: 0,
@@ -110,23 +110,23 @@ fn main() {
                 color_averages = [0, 0, 0];
 
                 // Loop through the screenshot
-                stride.h = buffer.len() / dim.h;
+                stride.h = buffer.len() / (dim.h as usize);
                 for y in 0..dim.h {
-                    stride.y = stride.h * y;
+                    stride.y = stride.h * (y as usize);
                     for x in 0..dim.w {
-                        stride.x = stride.w * x;
+                        stride.x = stride.w * (x as usize);
 
                         // Total the pixels
                         stride.s = stride.x + stride.y;
                         for i in 0..color_channels {
-                            color_totals[color_channels_index - i] += buffer[stride.s + i] as u32;
+                            color_totals[color_channels_index - (i as usize)] += buffer[stride.s + (i as usize)] as u32;
                         }
                     }
                 }
 
                 // Average the totals
                 for i in 0..color_channels {
-                    color_averages[i] = (color_totals[i] as f32 / pixels as f32).round() as u8;
+                    color_averages[i as usize] = (color_totals[i as usize] as f32 / pixels as f32).round() as u8;
                 }
 
                 // Convert to hex and send to acpi
