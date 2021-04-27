@@ -18,6 +18,10 @@ use scrap::{Capturer, Display};
 extern crate structopt;
 use structopt::StructOpt;
 
+//  //  //  //  //  //  //  //  //  //  //  //  //  //  //  //  //  //  //  //
+mod utils;
+use utils::rounded_integer_division;
+
 ////////////////////////////////////////////////////////////////////////////////
 #[derive(StructOpt, Debug)]
 #[structopt(name = "ambient-kb")]
@@ -67,8 +71,8 @@ fn main() {
         h: u16,
     }
     let dim = Dim {
-        w: (capturer.width()  as f32 / args.divisor as f32).round() as u16,
-        h: (capturer.height() as f32 / args.divisor as f32).round() as u16,
+        w: rounded_integer_division(capturer.width(),  args.divisor as usize) as u16,
+        h: rounded_integer_division(capturer.height(), args.divisor as usize) as u16,
     };
     let pixels: u32 = (dim.w as u32) * (dim.h as u32); // Theoretical maximum of 2,073,600 for 1920x1080;  so a large integer (ie, u32) is needed.
 
@@ -126,7 +130,7 @@ fn main() {
 
                 // Average the totals
                 for i in 0..color_channels {
-                    color_averages[i as usize] = (color_totals[i as usize] as f32 / pixels as f32).round() as u8;
+                    color_averages[i as usize] = rounded_integer_division(color_totals[i as usize] as usize, pixels as usize) as u8;
                 }
 
                 // Convert to hex and send to acpi
