@@ -67,8 +67,8 @@ fn main() {
         h: usize,
     }
     let dim = Dim {
-        w: capturer.width()  / args.divisor,
-        h: capturer.height() / args.divisor,
+        w: (capturer.width()  as f32 / args.divisor as f32).round() as usize,
+        h: (capturer.height() as f32 / args.divisor as f32).round() as usize,
     };
     let pixels = dim.w * dim.h; // Theoretical maximum of 2,073,600 for 1920x1080;  so a large integer (ie, u32) is needed.
 
