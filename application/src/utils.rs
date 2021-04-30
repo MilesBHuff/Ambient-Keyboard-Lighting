@@ -1,6 +1,5 @@
-pub fn rounded_integer_division(
-    dividend: usize,
-    divisor:  usize,
-) -> usize {
-    (dividend + (divisor / 2)) / divisor
+macro_rules! rounded_integer_division {
+    ($dividend: expr, $divisor: expr) => {
+        ($dividend + ($divisor / 2)) / $divisor
+    }
 }
