@@ -82,14 +82,14 @@ fn main() {
 
     struct Stride {
         h: usize,
-        w: usize,
-        x: usize,
+        w: u16,
+        x: u16,
         y: usize,
         s: usize,
     }
     let mut stride = Stride {
         h: 0,
-        w: 4 * (args.divisor as usize),
+        w: 4 * (args.divisor as u16),
         x: 0,
         y: 0,
         s: 0,
@@ -117,12 +117,12 @@ fn main() {
                 // Loop through the screenshot
                 stride.h = rounded_integer_division!(buffer.len(), (dim.h as usize));
                 for y in 0..dim.h {
-                    stride.y = stride.h * (y as usize);
+                    stride.y = stride.h * y as usize;
                     for x in 0..dim.w {
-                        stride.x = stride.w * (x as usize);
+                        stride.x = stride.w * x;
 
                         // Total the pixels
-                        stride.s = stride.x + stride.y;
+                        stride.s = stride.y + stride.x as usize;
                         for i in 0..color_channels as usize {
                             color_totals[color_channels_index - i] += buffer[stride.s + i] as u32;
                         }
