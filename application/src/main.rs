@@ -52,10 +52,10 @@ fn main() {
     // Colors
 
     let color_channels: u8 = 3;
-    let color_channels_index: usize = (color_channels as usize) - 1; // Could be a u8 if it weren't used for array indexing.
+    let color_channels_index: usize = (color_channels - 1) as usize; // Could be a u8 if it weren't used for array indexing.
 
-    let mut color_totals   = [0u32, 0u32, 0u32]; // Theoretical maximum of 528,768,000 for 1920x1080;  so a large integer (ie, u32) is needed.
-    let mut color_averages = [0u8,  0u8,  0u8 ]; // Theoretical maximum of 256 each;  so we only need 8 bits.
+    let mut color_totals   = [0u32; 3]; // Theoretical maximum of 528,768,000 for 1920x1080;  so a large integer (ie, u32) is needed.
+    let mut color_averages = [0u8;  3]; // Theoretical maximum of 256 each;  so we only need 8 bits.
 
     debug_assert_eq!(color_totals.len()   as u8, color_channels);
     debug_assert_eq!(color_averages.len() as u8, color_channels);
@@ -110,8 +110,8 @@ fn main() {
             Ok(buffer) => {
 
                 // Reset certain re-used variables
-                color_totals   = [0, 0, 0];
-                color_averages = [0, 0, 0];
+                color_totals   = [0; 3];
+                color_averages = [0; 3];
 
                 // Loop through the screenshot
                 stride.h = buffer.len() / (dim.h as usize);
