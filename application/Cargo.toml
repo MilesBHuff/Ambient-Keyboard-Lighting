@@ -1,6 +1,6 @@
 [package]
 name = "ambient-kb"
-version = "1.4.0"
+version = "1.4.1"
 license = "LAGPL3"
 authors = ["Miles B Huff <MilesBHuff@Users.NoReply.Github.com>"]
 description = "Calculates the average color of the display, and sets the keyboard to that color."
