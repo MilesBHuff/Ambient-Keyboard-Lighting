@@ -33,7 +33,7 @@ struct ArgStruct { // Remember to order the struct such that it will not use mor
 
     /// The priority to run at
     #[structopt(short, long, default_value = "19")] // 19 is the highest niceness possible.
-    niceness: i32,
+    niceness: i8,
 
     /// Only processes every n pixels
     #[structopt(short, long, default_value = "30")] // 30 works well at 1080p.  Causes flickering when not a multiple of both display axes.  Causes flickering when set too high.
@@ -47,6 +47,7 @@ struct ArgStruct { // Remember to order the struct such that it will not use mor
 ////////////////////////////////////////////////////////////////////////////////
 fn main() {
     let args = ArgStruct::from_args(); // Get input
+    assert!(args.niceness >= -20 && args.niceness < 20);
 
     //  //  //  //  //  //  //  //  //  //  //  //  //  //  //  //  //  //  //  //
     // Colors
@@ -98,7 +99,7 @@ fn main() {
     // Misc
 
     let frequency = Duration::from_millis((1000.0 / args.fps).round() as u64); // Set update frequency
-    unsafe {setpriority(PRIO_PROCESS, getpid() as u32, args.niceness);} // Reduce priority
+    unsafe {setpriority(PRIO_PROCESS, getpid() as u32, args.niceness as i32);} // Reduce priority
 
     ////////////////////////////////////////////////////////////////////////////////
     loop {
