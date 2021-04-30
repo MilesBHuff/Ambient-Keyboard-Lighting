@@ -115,7 +115,7 @@ fn main() {
                 color_averages = [0; 3];
 
                 // Loop through the screenshot
-                stride.h = buffer.len() / (dim.h as usize);
+                stride.h = rounded_integer_division!(buffer.len(), (dim.h as usize));
                 for y in 0..dim.h {
                     stride.y = stride.h * (y as usize);
                     for x in 0..dim.w {
