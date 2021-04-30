@@ -123,15 +123,15 @@ fn main() {
 
                         // Total the pixels
                         stride.s = stride.x + stride.y;
-                        for i in 0..color_channels {
-                            color_totals[color_channels_index - (i as usize)] += buffer[stride.s + (i as usize)] as u32;
+                        for i in 0..color_channels as usize {
+                            color_totals[color_channels_index - i] += buffer[stride.s + i] as u32;
                         }
                     }
                 }
 
                 // Average the totals
-                for i in 0..color_channels {
-                    color_averages[i as usize] = rounded_integer_division!(color_totals[i as usize], pixels) as u8;
+                for i in 0..color_channels as usize {
+                    color_averages[i] = rounded_integer_division!(color_totals[i], pixels) as u8;
                 }
 
                 // Convert to hex and send to ACPI
