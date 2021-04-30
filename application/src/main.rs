@@ -25,15 +25,7 @@ use utils::rounded_integer_division;
 ////////////////////////////////////////////////////////////////////////////////
 #[derive(StructOpt, Debug)]
 #[structopt(name = "ambient-kb")]
-struct ArgStruct {
-
-    /// Prints the color being assigned to the keyboard
-    #[structopt(short, long)]
-    verbose: bool,
-
-    /// Only processes every n pixels
-    #[structopt(short, long, default_value = "30")] // 30 works well at 1080p.  Causes flickering when not a multiple of both display axes.  Causes flickering when set too high.
-    divisor: u8,
+struct ArgStruct { // Remember to order the struct such that it will not use more memory than it needs.
 
     /// Runs this many times per second
     #[structopt(short, long, default_value = "20")] // 20 is smooth.  Any lower risks creating a strobing effect.  Everyone's eyes are different;  YMMV.
@@ -42,6 +34,14 @@ struct ArgStruct {
     /// The priority to run at
     #[structopt(short, long, default_value = "19")] // 19 is the highest niceness possible.
     niceness: i32,
+
+    /// Only processes every n pixels
+    #[structopt(short, long, default_value = "30")] // 30 works well at 1080p.  Causes flickering when not a multiple of both display axes.  Causes flickering when set too high.
+    divisor: u8,
+
+    /// Prints the color being assigned to the keyboard
+    #[structopt(short, long)]
+    verbose: bool,
 }
 
 ////////////////////////////////////////////////////////////////////////////////
