@@ -1,5 +1,6 @@
 # AppArmor policy for `ambient-kb`
 # Copyright © from 2021 by Miles B Huff per the terms of the GNU LAGPL 3.
+include <tunables/home>
 
 /usr/bin/ambient-kb {
 
@@ -12,8 +13,11 @@
 
   # Needed to access X display
   capability dac_read_search,
-  /home/*/.Xauthority r,
+  @{HOME}/.Xauthority r,
   /sys/devices/** rw, #WARN: Not a great setting;  but there's no way around this...
+
+  # Needed to set negative NICE levels
+  # capability sys_nice,
 
   # Keyboard controllers
   /sys/class/leds/system76_acpi::kbd_backlight/color w,
