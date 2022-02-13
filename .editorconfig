@@ -23,8 +23,3 @@ charset = utf-8
 [{*.md,*.rst}]
 indent_style = space
 indent_size = 2
-
-## Needed for code to work properly with the in-game editor.
-[*.rs]
-indent_size  = 4
-indent_style = space
