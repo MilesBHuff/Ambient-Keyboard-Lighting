@@ -43,18 +43,6 @@ You also *have* to be running an X11 session;  this application depends on X to 
 Execute the binary you installed, as root:  `ambient-kb`.  
 (You *have* to run this as root or it won't work, since it needs write access to a "file" in `/sys`.)  
 
-### systemd
-
-This application comes with a systemd service that allows you to automatically start this application at boot.  
-
-Unfortunately, the way this is currently implemented is... not great, so it may not work for you;  and it will ONLY work for single-user systems at present:  so if you have anything else under `/home/`, don't enable this service.  That said, if you *do* have a single-user system and want to try it out, just run the following as root:  `systemctl enable ambient-kb`.  
-
-### AppArmor
-
-The AppArmor profile you installed should automatically take effect if you have AppArmor installed and set to "enforcing".  
-
-This profile will prevent this application from accessing any file other than the handful I have explicitly enumerated;  thus dramatically mitigating the impact of any potential security vulnerabilities.  This is important for any application you're planning to run 24/7 as root.  
-
 ### Helptext
 
 ```
@@ -73,6 +61,18 @@ OPTIONS:
     -f, --fps <fps>              Runs this many times per second [default: 20]
     -n, --niceness <niceness>    The priority to run at [default: 19]
 ```
+
+### systemd
+
+This application comes with a systemd service that allows you to automatically start this application at boot.  
+
+Unfortunately, the way this is currently implemented is... not great, so it may not work for you;  and it will ONLY work for single-user systems at present:  so if you have anything else under `/home/`, don't enable this service.  That said, if you *do* have a single-user system and want to try it out, just run the following as root:  `systemctl enable ambient-kb`.  
+
+### AppArmor
+
+The AppArmor profile you installed should automatically take effect if you have AppArmor installed and set to "enforcing".  
+
+This profile will prevent this application from accessing any file other than the handful I have explicitly enumerated;  thus dramatically mitigating the impact of any potential security vulnerabilities.  This is important for any application you're planning to run 24/7 as root.  
 
 ## Copyright
 
