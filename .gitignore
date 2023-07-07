@@ -1,6 +1,5 @@
 ## Version control
 .git/
-Cargo.lock
 
 ## Dynamic/Unversionable
 target/

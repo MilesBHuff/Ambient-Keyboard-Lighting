@@ -11,6 +11,3 @@
 *.md  text
 *.rst text
 *.txt text
-
-## Binaries
-cargo.lock binary
