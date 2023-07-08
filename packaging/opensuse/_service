@@ -1,0 +1,17 @@
+<services>
+  <service name="obs_scm">
+    <param name="scm">git</param>
+    <param name="url">https://github.com/MilesBHuff/Ambient-Keyboard-Lighting.git</param>
+    <param name="revision">main</param>
+    <param name="versionformat">@PARENT_TAG@.%h.%ct</param>
+  </service>
+  <service name="tar" mode="buildtime">
+    <param name="filename">Ambient-Keyboard-Lighting</param>
+  </service>
+  <service name="recompress" mode="buildtime">
+    <param name="file">*.tar</param>
+    <param name="compression">gz</param>
+    <!-- <param name="level">9</param> -->
+  </service>
+  <service name="set_version" mode="buildtime"/>
+</services>
