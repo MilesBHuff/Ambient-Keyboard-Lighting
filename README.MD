@@ -1,4 +1,5 @@
 # Ambient Keyboard Lighting
+[![build result](https://build.opensuse.org/projects/home:MilesBHuff:Official/packages/ambient-kb-git/badge.svg?type=default)](https://build.opensuse.org/package/show/home:MilesBHuff:Official/ambient-kb-git)
 
 ## About
 
